@@ -247,8 +247,6 @@
 
 
   <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
 
   <script>
@@ -266,48 +264,48 @@
   // Inisialisasi Firebase
   const app = firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
-  const db = firebase.database();
+const db = firebase.database();
 
-  // Event submit form
-  document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const nim = document.getElementById('nim').value.trim();
-    const password = document.getElementById('password').value.trim();
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const nim = document.getElementById('nim').value.trim();
+  const password = document.getElementById('password').value.trim();
 
-    // Admin login khusus
-    if (nim === "*" && password === "0110") {
-      alert("Login Admin berhasil!");
+  // Admin login khusus
+  if (nim === "*" && password === "0110") {
+    alert("Login Admin berhasil!");
 
-      // Simpan status admin ke Realtime Database
-      const adminRef = db.ref("admins").push();
-      adminRef.set({
-        role: "admin",
+    // Simpan status admin ke Realtime Database
+    const adminRef = db.ref("admins").push();
+    adminRef.set({
+      role: "admin",
+      loginTime: new Date().toISOString()
+    });
+
+    window.location.href = "admin.html";
+    return;
+  }
+
+  // Login biasa via Firebase Authentication
+  const email = nim + "@mahana.com";
+  auth.signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      alert("Login berhasil! Selamat datang Mahana.");
+
+      // Simpan user login ke Realtime Database
+      const userRef = db.ref("users").push();
+      userRef.set({
+        email: email,
         loginTime: new Date().toISOString()
       });
 
-      window.location.href = "admin.html"; // arahkan ke halaman admin
-      return;
-    }
+      window.location.href = "index.html";
+    })
+    .catch((error) => {
+      document.getElementById('errorMessage').textContent = error.message;
+    });
+});
 
-    // Login biasa via Firebase Authentication
-    const email = nim + "@mahana.com";
-    auth.signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        alert("Login berhasil! Selamat datang Mahana.");
-
-        // Simpan user login ke Realtime Database
-        const userRef = db.ref("users").push();
-        userRef.set({
-          email: email,
-          loginTime: new Date().toISOString()
-        });
-
-        window.location.href = "index.html";
-      })
-      .catch((error) => {
-        document.getElementById('errorMessage').textContent = error.message;
-      });
-  });
 
   function togglePassword() {
     const input = document.getElementById('password');
