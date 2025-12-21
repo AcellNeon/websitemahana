@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Mahana</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: url('images/foto-background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      background-attachment: fixed;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      z-index: -1;
+    }
+
+    .login-container {
+      max-width: 420px;
+      margin: 8rem auto;
+      padding: 2.5rem;
+      background: rgba(245,222,179,0.25);
+      border-radius: 16px;
+      backdrop-filter: blur(8px);
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+      text-align: center;
+    }
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;   /* label rata kiri */
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  color: #fff;
+  text-align: left;          /* pastikan rata kiri */
+}
+
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.7rem 2.4rem 0.7rem 0.7rem; /* ruang kanan untuk ikon */
+  border: 1px solid rgba(245,222,179,0.4);
+  border-radius: 8px;
+  font-size: 1rem;
+  background: rgba(255,255,255,0.95);
+  color: #2B2B2B;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #8B5E3C;            /* warna ikon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-password .icon-eye-off { display: none; } /* default: hidden icon tersembunyi */
+.toggle-password:focus { outline: 2px solid rgba(245,222,179,0.7); border-radius: 6px; }
+
+
+
+.form-group label {
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.form-group input {
+  width: 100%;
+  box-sizing: border-box;   /* pastikan padding tidak merusak lebar */
+  padding: 0.7rem;
+  border: 1px solid rgba(245,222,179,0.4);
+  border-radius: 8px;
+  font-size: 1rem;
+  background: rgba(255,255,255,0.95);
+  color: #2B2B2B;
+  transition: border 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #F5DEB3;
+  box-shadow: 0 0 8px rgba(245,222,179,0.6);
+}
+
+.btn-login {
+  display: inline-block;
+  padding: 0.7rem 2rem;
+  background: #F5DEB3;
+  color: #8B5E3C;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  cursor: pointer;
+  margin-top: 0.8rem;
+}
+
+.btn-login:hover {
+  background: #8B5E3C;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 0 12px rgba(245,222,179,0.9),
+              0 0 24px rgba(245,222,179,0.6);
+}
+
+.form-actions {
+  text-align: center;       /* tombol di tengah */
+}
+
+
+    .btn-login:hover {
+      background: #8B5E3C;
+      color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 0 12px rgba(245,222,179,0.9),
+                  0 0 24px rgba(245,222,179,0.6);
+    }
+
+    #errorMessage {
+      color: #ffb3b3;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+
+.login-container h2 {
+  margin-bottom: 0.6rem;   /* lebih rapat dari sebelumnya */
+  color: #F5DEB3;
+  font-size: 1.6rem;
+}
+
+.login-subtext {
+  font-size: 0.85rem;
+  color: rgba(245,222,179,0.9);
+  margin-bottom: 1rem;     /* lebih dekat ke input */
+}
+
+.btn-login {
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  background: #F5DEB3;
+  color: #8B5E3C;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.forgot-password {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+}
+
+.forgot-password a {
+  color: #F5DEB3;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.forgot-password a:hover {
+  color: #fff;
+}
+
+
+
+  </style>
+</head>
+<body>
+<div class="login-container">
+  <h2>Login to your account!</h2>
+  <p class="login-subtext">Masukkan NISN dan Password Anda</p>
+<form id="loginForm">
+  <div class="form-group">
+    <label for="nim">NISN</label>
+    <input type="text" id="nim" name="nim" placeholder="1234567890" required />
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <div class="password-wrapper">
+      <input type="password" id="password" name="password" placeholder="Enter your password" required />
+      <button type="button" class="toggle-password" aria-label="Tampilkan password" onclick="togglePassword()">
+        <!-- Eye (visible) -->
+        <svg class="icon-eye" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7Zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+        </svg>
+        <!-- Eye-off (hidden) -->
+        <svg class="icon-eye-off" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M2 5.27 3.27 4 20 20.73 18.73 22l-2.39-2.39C15.34 20.22 13.73 21 12 21 5 21 1 14 1 14a20.9 20.9 0 0 1 5.28-6.34L2 5.27Zm21 8.73s-4 7-11 7c-1.19 0-2.32-.24-3.38-.67l7.93-7.93a5 5 0 0 0-5.98-5.98L12 3c7 0 11 7 11 7ZM9.9 8.1A3 3 0 0 1 15 12c0 .42-.08.83-.23 1.2L9.9 8.1Z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Tombol Continue -->
+  <div class="form-actions">
+    <button type="submit" class="btn-login">Continue</button>
+  </div>
+</form>
+
+
+
+
+  <!-- Lupa Password -->
+  <p class="forgot-password">
+    <a href="https://wa.me/6288215455705" target="_blank">Lupa Password?</a>
+  </p>
+
+  <p id="errorMessage"></p>
+</div>
+
+
+
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
+  <script>
+    // Konfigurasi Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBvAKattEB-5pOGdiyea0hRI88zsWN36n0",
+      authDomain: "mahana-fc4e0.firebaseapp.com",
+      projectId: "mahana-fc4e0",
+      storageBucket: "mahana-fc4e0.firebasestorage.app",
+      messagingSenderId: "726207803092",
+      appId: "1:726207803092:web:8d0af4e5996b83868b1541"
+    };
+
+    // Inisialisasi Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Event submit form
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const nim = document.getElementById('nim').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      // Admin login khusus
+      if (nim === "*" && password === "00000000") {
+        alert("Login Admin berhasil!");
+        window.location.href = "admin.html"; // arahkan ke halaman admin
+        return;
+      }
+
+      // Login biasa via Firebase
+      const email = nim + "@mahana.com";
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          alert("Login berhasil! Selamat datang Mahana.");
+          window.location.href = "index.html";
+        })
+        .catch((error) => {
+          document.getElementById('errorMessage').textContent = error.message;
+        });
+    });
+
+  function togglePassword() {
+    const input = document.getElementById('password');
+    const btn = document.querySelector('.toggle-password');
+    const eye = btn.querySelector('.icon-eye');
+    const eyeOff = btn.querySelector('.icon-eye-off');
+
+    const isHidden = input.type === 'password';
+    input.type = isHidden ? 'text' : 'password';
+    btn.setAttribute('aria-label', isHidden ? 'Sembunyikan password' : 'Tampilkan password');
+
+    // swap ikon
+    if (isHidden) {
+      eye.style.display = 'none';
+      eyeOff.style.display = 'block';
+    } else {
+      eye.style.display = 'block';
+      eyeOff.style.display = 'none';
+    }
+  }
+  </script>
+</body>
+</html>
