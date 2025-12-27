@@ -5,155 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Panel - Mahana</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: url('images/foto-background.jpg') no-repeat center center fixed;
-      background-size: cover;
-      background-attachment: fixed;
-      position: relative;
-      overflow-x: hidden;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.4);
-      z-index: -1;
-    }
-    .admin-container {
-      display: flex;
-      min-height: 100vh;
-    }
-    /* Sidebar */
-    .sidebar {
-      width: 240px;
-      background: rgba(43,43,43,0.85);
-      backdrop-filter: blur(6px);
-      color: #F5DEB3;
-      padding: 2rem 1rem;
-      display: flex;
-      flex-direction: column;
-    }
-    .sidebar h2 {
-      text-align: center;
-      margin-bottom: 2rem;
-      color: #fff;
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
-    .sidebar a {
-      color: #F5DEB3;
-      text-decoration: none;
-      padding: 0.8rem 1rem;
-      border-radius: 8px;
-      margin-bottom: 0.8rem;
-      transition: background 0.3s ease, color 0.3s ease;
-      display: block;
-      font-weight: 500;
-    }
-    .sidebar a:hover {
-      background: rgba(245,222,179,0.25);
-      color: #fff;
-    }
-    .logout-btn {
-      margin-top: auto;
-      background: #F5DEB3;
-      color: #2B2B2B;
-      text-align: center;
-      font-weight: 600;
-      padding: 0.8rem;
-      border-radius: 8px;
-    }
-    .logout-btn:hover {
-      background: #8B5E3C;
-      color: #fff;
-    }
-    /* Main content */
-    .main-content {
-      flex: 1;
-      padding: 2rem;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(6px);
-      color: #2B2B2B;
-    }
-    .main-content h2 {
-      margin-bottom: 1rem;
-      color: #8B5E3C;
-      font-size: 1.4rem;
-      font-weight: 600;
-    }
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-    }
-    .user-list ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .user-list li {
-      padding: 0.6rem 0;
-      border-bottom: 1px solid #eee;
-      font-size: 0.95rem;
-    }
-    /* Form */
-    form .form-group {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      margin-bottom: 1rem;
-    }
-    form label {
-      font-weight: 500;
-      margin-bottom: 0.4rem;
-      color: #2B2B2B;
-    }
-    form input, form textarea {
-      width: 100%;
-      padding: 0.6rem;
-      border: 1px solid rgba(245,222,179,0.6);
-      border-radius: 8px;
-      font-size: 1rem;
-      background: rgba(255,255,255,0.95);
-      color: #2B2B2B;
-    }
-    form input:focus, form textarea:focus {
-      border-color: #F5DEB3;
-      box-shadow: 0 0 8px rgba(245,222,179,0.6);
-    }
-    .btn-login {
-      display: inline-block;
-      padding: 0.7rem 1.5rem;
-      background: #F5DEB3;
-      color: #8B5E3C;
-      border-radius: 25px;
-      font-weight: 600;
-      font-size: 1rem;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-      cursor: pointer;
-    }
-    .btn-login:hover {
-      background: #8B5E3C;
-      color: #fff;
-      transform: translateY(-2px);
-      box-shadow: 0 0 12px rgba(245,222,179,0.9),
-                  0 0 24px rgba(245,222,179,0.6);
-    }
-    #addMessage, #newsMessage {
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: #8B5E3C;
-    }
-  </style>
 </head>
 <body>
   <div class="admin-container">
@@ -163,12 +14,13 @@
       <a href="#users">Daftar User</a>
       <a href="#addAccount">Tambah User</a>
       <a href="#addNews">Tambah Berita</a>
-      <a href="#news">News</a>
+      <a href="berita.html">Lihat Berita</a>
       <a href="login.html" class="logout-btn">Logout</a>
     </div>
 
     <!-- Main Content -->
     <div class="main-content">
+      <!-- Daftar User -->
       <div id="users" class="card user-list">
         <h2>Daftar User</h2>
         <ul id="userList"></ul>
@@ -180,15 +32,13 @@
         <form id="addAccountForm">
           <div class="form-group">
             <label for="newNim">NISN</label>
-            <input type="text" id="newNim" name="newNim" placeholder="Masukkan NIM" required />
+            <input type="text" id="newNim" required />
           </div>
           <div class="form-group">
             <label for="newPassword">Password</label>
-            <input type="password" id="newPassword" name="newPassword" placeholder="Masukkan password" required />
+            <input type="password" id="newPassword" required />
           </div>
-          <div class="form-actions">
-            <button type="submit" class="btn-login">Tambah</button>
-          </div>
+          <button type="submit" class="btn-login">Tambah</button>
         </form>
         <p id="addMessage"></p>
       </div>
@@ -199,22 +49,15 @@
         <form id="addNewsForm">
           <div class="form-group">
             <label for="newsTitle">Judul Berita</label>
-            <input type="text" id="newsTitle" name="newsTitle" placeholder="Masukkan judul berita" required />
+            <input type="text" id="newsTitle" required />
           </div>
           <div class="form-group">
             <label for="newsContent">Isi Berita</label>
-            <textarea id="newsContent" name="newsContent" rows="5" placeholder="Tulis isi berita..." required></textarea>
+            <textarea id="newsContent" rows="5" required></textarea>
           </div>
-          <div class="form-actions">
-            <button type="submit" class="btn-login">Simpan Berita</button>
-          </div>
+          <button type="submit" class="btn-login">Simpan Berita</button>
         </form>
         <p id="newsMessage"></p>
-      </div>
-
-      <div id="news" class="card news-section">
-        <h2>News</h2>
-        <p>Berita terbaru Mahana akan ditampilkan di <strong>berita.html</strong>.</p>
       </div>
     </div>
   </div>
@@ -224,76 +67,64 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
-<script>
-  // Konfigurasi Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyBvAKattEB-5pOGdiyea0hRI88zsWN36n0",
-    authDomain: "mahana-fc4e0.firebaseapp.com",
-    projectId: "mahana-fc4e0",
-    storageBucket: "mahana-fc4e0.firebasestorage.app",
-    messagingSenderId: "726207803092",
-    appId: "1:726207803092:web:8d0af4e5996b83868b1541"
-  };
-  const app = firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const db = firebase.firestore();
+  <script>
+    // Konfigurasi Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBvAKattEB-5pOGdiyea0hRI88zsWN36n0",
+      authDomain: "mahana-fc4e0.firebaseapp.com",
+      projectId: "mahana-fc4e0",
+      storageBucket: "mahana-fc4e0.appspot.com",
+      messagingSenderId: "726207803092",
+      appId: "1:726207803092:web:8d0af4e5996b83868b1541"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
-  // Tambah akun baru
-  document.getElementById('addAccountForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const nim = document.getElementById('newNim').value.trim();
-    const password = document.getElementById('newPassword').value.trim();
-    const email = nim + "@mahana.com";
+    // Tambah akun baru
+    document.getElementById('addAccountForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const nim = document.getElementById('newNim').value.trim();
+      const password = document.getElementById('newPassword').value.trim();
+      const email = nim + "@mahana.com";
 
-    if (password.length < 8) {
-      document.getElementById('addMessage').textContent = "Password minimal 8 karakter!";
-      return;
-    }
+      if (password.length < 8) {
+        document.getElementById('addMessage').textContent = "Password minimal 8 karakter!";
+        return;
+      }
 
-    auth.createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        document.getElementById('addMessage').textContent = "Akun berhasil ditambahkan!";
-        const li = document.createElement('li');
-        li.textContent = "User - " + email;
-        document.getElementById('userList').appendChild(li);
-        document.getElementById('addAccountForm').reset();
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          document.getElementById('addMessage').textContent = "Akun berhasil ditambahkan!";
+          const li = document.createElement('li');
+          li.textContent = "User - " + email;
+          document.getElementById('userList').appendChild(li);
+          document.getElementById('addAccountForm').reset();
+        })
+        .catch((error) => {
+          document.getElementById('addMessage').textContent = "Error: " + error.message;
+        });
+    });
+
+    // Tambah berita baru
+    document.getElementById('addNewsForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const title = document.getElementById('newsTitle').value.trim();
+      const content = document.getElementById('newsContent').value.trim();
+
+      db.collection("news").add({
+        title: title,
+        content: content,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      })
+      .then(() => {
+        document.getElementById('newsMessage').textContent = "Berita berhasil disimpan!";
+        document.getElementById('addNewsForm').reset();
       })
       .catch((error) => {
-        document.getElementById('addMessage').textContent = "Error: " + error.message;
+        document.getElementById('newsMessage').textContent = "Error: " + error.message;
       });
-  });
-
-  // Tambah berita baru
-  document.getElementById('addNewsForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const title = document.getElementById('newsTitle').value.trim();
-    const content = document.getElementById('newsContent').value.trim();
-
-    db.collection("news").add({
-      title: title,
-      content: content,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    })
-    .then(() => {
-      document.getElementById('newsMessage').textContent = "Berita berhasil disimpan!";
-      document.getElementById('addNewsForm').reset();
-    })
-    .catch((error) => {
-      document.getElementById('newsMessage').textContent = "Error: " + error.message;
     });
-  });
-
-  // Tombol Logout
-  const logoutBtn = document.querySelector('.logout-btn');
-  logoutBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    auth.signOut().then(() => {
-      alert("Anda telah logout.");
-      window.location.href = "login.html";
-    }).catch((error) => {
-      alert("Error logout: " + error.message);
-    });
-  });
-</script>
+  </script>
 </body>
 </html>
