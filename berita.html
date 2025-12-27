@@ -145,7 +145,7 @@
 </html>
 
 
-  <!-- Firebase SDK -->
+<!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
@@ -155,11 +155,11 @@
       apiKey: "AIzaSyBvAKattEB-5pOGdiyea0hRI88zsWN36n0",
       authDomain: "mahana-fc4e0.firebaseapp.com",
       projectId: "mahana-fc4e0",
-      storageBucket: "mahana-fc4e0.firebasestorage.app",
+      storageBucket: "mahana-fc4e0.appspot.com",
       messagingSenderId: "726207803092",
       appId: "1:726207803092:web:8d0af4e5996b83868b1541"
     };
-    const app = firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
     // Ambil berita dari Firestore
@@ -167,36 +167,17 @@
       const newsList = document.getElementById("newsList");
       newsList.innerHTML = "";
       snapshot.forEach((doc) => {
-        const news = doc.data();
-        const card = document.createElement("div");
-        card.className = "card";
-        card.innerHTML = `
-          <h3>${news.title}</h3>
-          <p>${news.content}</p>
-          <small>${news.createdAt ? news.createdAt.toDate().toLocaleString() : ""}</small>
+        const data = doc.data();
+        const div = document.createElement("div");
+        div.classList.add("card");
+        div.innerHTML = `
+          <h3>${data.title}</h3>
+          <p>${data.content}</p>
+          <small>${data.createdAt ? data.createdAt.toDate().toLocaleString() : ""}</small>
         `;
-        newsList.appendChild(card);
+        newsList.appendChild(div);
       });
     });
   </script>
-
-  <script>
-  db.collection("news").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
-    const newsList = document.getElementById("newsList");
-    newsList.innerHTML = "";
-    snapshot.forEach((doc) => {
-      const news = doc.data();
-      const card = document.createElement("div");
-      card.className = "news-card";
-      card.innerHTML = `
-        <h3>${news.title}</h3>
-        <p>${news.content}</p>
-        <small>${news.createdAt ? news.createdAt.toDate().toLocaleString() : ""}</small>
-      `;
-      newsList.appendChild(card);
-    });
-  });
-</script>
-
 </body>
 </html>
