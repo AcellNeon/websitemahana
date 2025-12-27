@@ -210,7 +210,7 @@
     const password = document.getElementById('password').value.trim();
 
     // Admin login khusus
-    if (nim === "user" && password === "00000000") {
+    if (nim === "*" && password === "mahanamembahana") {
       alert("Login Admin berhasil!");
       db.ref("admins").push({
         role: "admin",
