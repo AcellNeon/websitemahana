@@ -163,11 +163,11 @@
   const firebaseConfig = {
     apiKey: "AIzaSyBvAKattEB-5pOGdiyea0hRI88zsWN36n0",
     authDomain: "mahana-fc4e0.firebaseapp.com",
+    databaseURL: "https://mahana-fc4e0-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "mahana-fc4e0",
-    storageBucket: "mahana-fc4e0.appspot.com",
+    storageBucket: "mahana-fc4e0.firebasestorage.app",
     messagingSenderId: "726207803092",
-    appId: "1:726207803092:web:8d0af4e5996b83868b1541",
-    databaseURL: "https://mahana-fc4e0-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    appId: "1:726207803092:web:8d0af4e5996b83868b1541"
   };
 
   // Inisialisasi Firebase
@@ -175,7 +175,6 @@
   const auth = firebase.auth();
   const db = firebase.database();
 
-<script>
   // Event submit form
   document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -183,7 +182,7 @@
     const password = document.getElementById('password').value.trim();
 
     // Admin login khusus
-    if (nim === "*" && password === "0110") {
+    if (nim === "user" && password === "00000000") {
       alert("Login Admin berhasil!");
 
       // Simpan status admin ke Realtime Database
@@ -233,7 +232,6 @@
       eye.style.display = 'block';
       eyeOff.style.display = 'none';
     }
-  }
-</script>
+    </script>
 </body>
 </html>
