@@ -149,8 +149,10 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
-  <script>
-    // Konfigurasi Firebase (sama dengan admin panel)
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
     const firebaseConfig = {
       apiKey: "AIzaSyBvAKattEB-5pOGdiyea0hRI88zsWN36n0",
       authDomain: "mahana-fc4e0.firebaseapp.com",
@@ -159,34 +161,33 @@
       messagingSenderId: "726207803092",
       appId: "1:726207803092:web:8d0af4e5996b83868b1541"
     };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+
+    // Inisialisasi
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
     // Ambil berita dari Firestore
-    function loadNews() {
-      db.collection("news").orderBy("createdAt", "desc").get()
-        .then((snapshot) => {
-          const newsList = document.getElementById("newsList");
-          newsList.innerHTML = ""; // reset isi
-          snapshot.forEach((doc) => {
-            const data = doc.data();
-            const card = document.createElement("div");
-            card.className = "card";
-            card.innerHTML = `
-              <h3>${data.title}</h3>
-              <p>${data.content}</p>
-              <small>${data.createdAt ? data.createdAt.toDate().toLocaleString("id-ID") : ""}</small>
-            `;
-            newsList.appendChild(card);
-          });
-        })
-        .catch((error) => {
-          document.getElementById("newsList").innerHTML = "Error: " + error.message;
-        });
+    async function loadNews() {
+      const newsList = document.getElementById("newsList");
+
+      // Query: ambil koleksi "news" urutkan berdasarkan waktu terbaru
+      const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
+      const querySnapshot = await getDocs(q);
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <h3>${data.title}</h3>
+          <p>${data.content}</p>
+          <small>${data.createdAt?.toDate().toLocaleString() || ""}</small>
+        `;
+        newsList.appendChild(li);
+      });
     }
 
-    // Panggil fungsi loadNews saat halaman dibuka
-    window.onload = loadNews;
+    // Panggil fungsi saat halaman load
+    loadNews();
   </script>
 </body>
 </html>
