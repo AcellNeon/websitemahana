@@ -67,64 +67,69 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
-  <script>
-    // Konfigurasi Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyBvAKattEB-5pOGdiyea0hRI88zsWN36n0",
-      authDomain: "mahana-fc4e0.firebaseapp.com",
-      projectId: "mahana-fc4e0",
-      storageBucket: "mahana-fc4e0.appspot.com",
-      messagingSenderId: "726207803092",
-      appId: "1:726207803092:web:8d0af4e5996b83868b1541"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
+  <script type="module">
+  // Import modular SDK
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-    // Tambah akun baru
-    document.getElementById('addAccountForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const nim = document.getElementById('newNim').value.trim();
-      const password = document.getElementById('newPassword').value.trim();
-      const email = nim + "@mahana.com";
+  // Konfigurasi Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyBvAKattEB-5pOGdiyea0hRI88zsWN36n0",
+    authDomain: "mahana-fc4e0.firebaseapp.com",
+    projectId: "mahana-fc4e0",
+    storageBucket: "mahana-fc4e0.appspot.com",
+    messagingSenderId: "726207803092",
+    appId: "1:726207803092:web:8d0af4e5996b83868b1541"
+  };
 
-      if (password.length < 8) {
-        document.getElementById('addMessage').textContent = "Password minimal 8 karakter!";
-        return;
-      }
+  // Inisialisasi
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-      auth.createUserWithEmailAndPassword(email, password)
-        .then(() => {
-          document.getElementById('addMessage').textContent = "Akun berhasil ditambahkan!";
-          const li = document.createElement('li');
-          li.textContent = "User - " + email;
-          document.getElementById('userList').appendChild(li);
-          document.getElementById('addAccountForm').reset();
-        })
-        .catch((error) => {
-          document.getElementById('addMessage').textContent = "Error: " + error.message;
-        });
-    });
+  // Tambah akun baru
+  document.getElementById('addAccountForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const nim = document.getElementById('newNim').value.trim();
+    const password = document.getElementById('newPassword').value.trim();
+    const email = nim + "@mahana.com";
 
-    // Tambah berita baru
-    document.getElementById('addNewsForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const title = document.getElementById('newsTitle').value.trim();
-      const content = document.getElementById('newsContent').value.trim();
+    if (password.length < 8) {
+      document.getElementById('addMessage').textContent = "Password minimal 8 karakter!";
+      return;
+    }
 
-      db.collection("news").add({
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      document.getElementById('addMessage').textContent = "Akun berhasil ditambahkan!";
+      const li = document.createElement('li');
+      li.textContent = "User - " + email;
+      document.getElementById('userList').appendChild(li);
+      document.getElementById('addAccountForm').reset();
+    } catch (error) {
+      document.getElementById('addMessage').textContent = "Error: " + error.message;
+    }
+  });
+
+  // Tambah berita baru
+  document.getElementById('addNewsForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const title = document.getElementById('newsTitle').value.trim();
+    const content = document.getElementById('newsContent').value.trim();
+
+    try {
+      await addDoc(collection(db, "news"), {
         title: title,
         content: content,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      })
-      .then(() => {
-        document.getElementById('newsMessage').textContent = "Berita berhasil disimpan!";
-        document.getElementById('addNewsForm').reset();
-      })
-      .catch((error) => {
-        document.getElementById('newsMessage').textContent = "Error: " + error.message;
+        createdAt: serverTimestamp()
       });
-    });
-  </script>
+      document.getElementById('newsMessage').textContent = "Berita berhasil disimpan!";
+      document.getElementById('addNewsForm').reset();
+    } catch (error) {
+      document.getElementById('newsMessage').textContent = "Error: " + error.message;
+    }
+  });
+</script>
 </body>
 </html>
