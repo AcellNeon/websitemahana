@@ -149,45 +149,47 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
-<script type="module">
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getFirestore, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
+    // Konfigurasi Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyBvAKattEB-5pOGdiyea0hRI88zsWN36n0",
       authDomain: "mahana-fc4e0.firebaseapp.com",
       projectId: "mahana-fc4e0",
       storageBucket: "mahana-fc4e0.appspot.com",
       messagingSenderId: "726207803092",
-      appId: "1:726207803092:web:8d0af4e5996b83868b1541"
+      appId: "1:726207803092:web:8d0af4e5996b83868b1541",
+      databaseURL: "https://mahana-fc4e0-default-rtdb.firebaseio.com"  // ✅ penting untuk Realtime DB
     };
 
     // Inisialisasi
     const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    const db = getDatabase(app);
 
-    // Ambil berita dari Firestore
-    async function loadNews() {
-      const newsList = document.getElementById("newsList");
+    // Referensi ke node "news"
+    const newsRef = ref(db, "news");
 
-      // Query: ambil koleksi "news" urutkan berdasarkan waktu terbaru
-      const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
-      const querySnapshot = await getDocs(q);
+    // Ambil data realtime
+    onValue(newsRef, (snapshot) => {
+      const newsListDiv = document.getElementById("newsList");
+      newsListDiv.innerHTML = ""; // reset isi
 
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        const li = document.createElement("li");
-        li.innerHTML = `
+      snapshot.forEach((childSnapshot) => {
+        const data = childSnapshot.val();
+        const newsCard = document.createElement("div");
+        newsCard.classList.add("card");
+
+        newsCard.innerHTML = `
           <h3>${data.title}</h3>
           <p>${data.content}</p>
-          <small>${data.createdAt?.toDate().toLocaleString() || ""}</small>
+          <small>Dibuat: ${data.createdAt ? new Date(data.createdAt).toLocaleString() : "-"}</small>
         `;
-        newsList.appendChild(li);
-      });
-    }
 
-    // Panggil fungsi saat halaman load
-    loadNews();
+        newsListDiv.appendChild(newsCard);
+      });
+    });
   </script>
 </body>
 </html>
