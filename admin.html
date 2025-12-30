@@ -86,7 +86,7 @@
   // Inisialisasi
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-  const db = getDatabase(app);
+  const db = getFirebase(app);
 
   // Tambah akun baru
   document.getElementById('addAccountForm').addEventListener('submit', async (e) => {
