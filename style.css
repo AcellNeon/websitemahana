@@ -545,3 +545,217 @@ footer a:hover {
     color: #666;
     font-size: 0.85rem;
   }
+
+/* Reset dasar */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  background: #f4f6f9;
+  color: #333;
+}
+
+/* Container utama */
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background: #2c3e50;
+  color: #fff;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+.sidebar a {
+  display: block;
+  color: #ecf0f1;
+  text-decoration: none;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.sidebar a:hover {
+  background: #34495e;
+}
+
+.sidebar .logout-btn {
+  background: #e74c3c;
+  color: #fff;
+  text-align: center;
+}
+
+.sidebar .logout-btn:hover {
+  background: #c0392b;
+}
+
+/* Konten utama */
+.main-content {
+  flex: 1;
+  padding: 30px;
+}
+
+/* Card */
+.card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+  color: #2c3e50;
+}
+
+/* Form */
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s;
+}
+
+input:focus, textarea:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+/* Tombol */
+.btn-login {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-login:hover {
+  background: #2980b9;
+}
+
+/* Pesan */
+#addMessage, #newsMessage {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #27ae60;
+}
+
+/* Daftar User */
+.user-list ul {
+  list-style: none;
+}
+
+.user-list li {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+  .admin-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    text-align: center;
+  }
+
+  .main-content {
+    padding: 15px;
+  }
+}
+
+/* Animasi fade-in untuk card */
+.card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Keyframes fade-in + slide-up */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover efek pada card */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+/* Animasi hover untuk tombol */
+.btn-login {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.btn-login:hover {
+  background: #2980b9;
+  transform: scale(1.05);
+}
+
+/* Sidebar link animasi */
+.sidebar a {
+  display: block;
+  color: #ecf0f1;
+  text-decoration: none;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.sidebar a:hover {
+  background: #34495e;
+  transform: translateX(5px);
+}
+
